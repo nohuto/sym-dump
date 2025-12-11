@@ -7,7 +7,7 @@ kd is a kernel-mode debugger based on a console user interface.
 WinDbg can be used as a user-mode or kernel-mode debugger, but not both at the same time.
 It provides a GUI for the user.
 ```
-> [Windows Internals E7](https://github.com/5Noxi/windows-books/releases)  
+> [Windows Internals E7](https://github.com/nohuto/windows-books/releases)  
 
 Preview:
 
@@ -17,7 +17,7 @@ Modules are kernel files or drivers loaded into memory with code and data, you c
 ```ps
 !lmi Module
 ```
-> [lmi.md | windows-driver-doc](https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/-lmi.md)  
+> [lmi.md | windows-driver-doc](https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/-lmi.md)  
 
 Symbols map module memory addresses to names of functions and variables. `dd l1` shows a single `32-bit` value at a symbol's address, revealing its current memory data. Before the GUI gets displayed, it checks whether kernel debugging is enabled and KD is installed. It currently searches for `kd.exe` in:
 ```ps
@@ -34,9 +34,9 @@ iwr get.scoop.sh -OutFile "$env:temp\Scoop.ps1"; powershell -File "$env:temp\Sco
 scoop install winget
 winget install Microsoft.WinDbg --accept-package-agreements --accept-source-agreements
 ```
-> [Winget Install | windows-dev-docs](https://github.com/5Noxi/windows-dev-docs/blob/docs/hub/package-manager/winget/install.md)
+> [Winget Install | windows-dev-docs](https://github.com/nohuto/windows-dev-docs/blob/docs/hub/package-manager/winget/install.md)
 
-The tool was partly used for [wpr-reg-records](https://github.com/5Noxi/wpr-reg-records#kernel-values) (`nt` module).
+The tool was partly used for [wpr-reg-records](https://github.com/nohuto/wpr-reg-records#kernel-values) (`nt` module).
 
 ## GUI Buttons
 | Button            | Description                                                                                           |
@@ -47,7 +47,7 @@ The tool was partly used for [wpr-reg-records](https://github.com/5Noxi/wpr-reg-
 | `Phase Folder`    | Opens `$env:localappdata\Noverse\Symbols`<br>Each `.txt` file is saved in its respective module folder |
 | `Dump`           | Runs through all dump phases using the currently selected module                                     |
 | `1`           | Specifies the range of length size, default is `1`, it might not work properly with a length of `8 <`.                                 |
-| `dd`           | Displays the current [`Display Memory`](https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/d--da--db--dc--dd--dd--df--dp--dq--du--dw--dw--dyb--dyd--display-memor.md) command |
+| `dd`           | Displays the current [`Display Memory`](https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/d--da--db--dc--dd--dd--df--dp--dq--du--dw--dw--dyb--dyd--display-memor.md) command |
 
 ## Dump Procedure
 
@@ -56,7 +56,7 @@ The tool starts a local kernel debugging session for each phase, which means tha
 -kl # Starts a kernel debugging session on the same machine as the debugger.
 .reload /f # Forces the debugger to immediately load the symbols. This parameter overrides lazy symbol loading. For more information, see the following Remarks section.
 ```
-> [reload--reload-module-.md | windows-driver-docs](https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/-reload--reload-module-.md)  
+> [reload--reload-module-.md | windows-driver-docs](https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/-reload--reload-module-.md)  
 
 I'll use `ReservedCpuSets` (`nt` module, symbole name != value name) for the following examples ([discord notes channel](https://discord.com/channels/836870260715028511/1397387718874501120/1397531587985543268)). 
 ```c
@@ -69,7 +69,7 @@ Firstly it reloads all modules and lists them in the GUI, after the user selecti
 x [Options] Module!Symbol
 /1 # Displays only the name of each symbol.
 ```
-> [x--examine-symbols-.md | windows-driver-docs](https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/x--examine-symbols-.md)  
+> [x--examine-symbols-.md | windows-driver-docs](https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/x--examine-symbols-.md)  
 
 Output will now looks like:
 ```c
@@ -87,10 +87,10 @@ There are two other ways to specify the value (the L Size range specifier):
 - L- Size (with a hyphen) specifies a range of length Size that ends at the given address. For example, 80000000 L20 specifies the range from 0x80000000 through 0x8000001F, and 80000000 L-20 specifies the range from 0x7FFFFFE0 through 0x7FFFFFFF. // l1 = display one unit of data at the specified address
 ```
 If you want to display memory differently with a increased range of length Size, use `New KD Session`.
-> [address-and-address-range-syntax.md | windows-driver-docs](https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/address-and-address-range-syntax.md)  
-> [display-memory | windows-driver-docs](https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/d--da--db--dc--dd--dd--df--dp--dq--du--dw--dw--dyb--dyd--display-memor.md)  
+> [address-and-address-range-syntax.md | windows-driver-docs](https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/address-and-address-range-syntax.md)  
+> [display-memory | windows-driver-docs](https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/d--da--db--dc--dd--dd--df--dp--dq--du--dw--dw--dyb--dyd--display-memor.md)  
 
-![](https://github.com/5Noxi/sym-dump/blob/main/images/dismem.png?raw=true)
+![](https://github.com/nohuto/sym-dump/blob/main/images/dismem.png?raw=true)
 
 `module-Filtered.txt` gets pasted into a KD session, output gets dynamically saved in `module-KD.txt`). The KD window gets opened in the background (minimized), you can open it whenever you want to see the output:
 ```c
@@ -104,11 +104,11 @@ KiReservedCpuSets <> 00000000
 The final output is `module-Dump.txt`.
 
 Miscellaneous references:
-> https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/symbol-path.md  
-> https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/debugger-reference.md  
-> https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/kd-command-line-options.md  
-> https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/commands.md  
-> https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/lm--list-loaded-modules-.md  
-> https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/symchk-command-line-options.md  
-> https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/deferred-symbol-loading.md  
-> https://github.com/5Noxi/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/symbols.md  
+> https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/symbol-path.md  
+> https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/debugger-reference.md  
+> https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/kd-command-line-options.md  
+> https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/commands.md  
+> https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debuggercmds/lm--list-loaded-modules-.md  
+> https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/symchk-command-line-options.md  
+> https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/deferred-symbol-loading.md  
+> https://github.com/nohuto/windows-driver-docs/blob/staging/windows-driver-docs-pr/debugger/symbols.md  
